@@ -1,0 +1,320 @@
+\documentclass[11pt,pdftex]{article}
+
+\title{Discussion}
+%Electric fish use electrocommunication signals to fine-tune relative dominance and access to resources
+
+\author{Till Raab$^{a,b\dagger}$, Jan Benda$^{a,b,c}$}
+%\author{}
+
+\date{\normalsize $^a$ Institute for Neurobiology, Eberhard Karls Universit\"at, T\"ubingen, Germany\\
+  $^b$ Centre for Integrative Neuroscience, Eberhard Karls Universit\"at, T\"ubingen, Germany\\
+  $^c$ Bernstein Centre for Computational Neuroscience, Eberhard Karls Universit\"at, T\"ubingen, Germany\\
+$^{\dagger}$ corresponding author: \url{till.raab@uni-tuebingen.de}
+%\date{ 
+}
+
+\newcommand{\runningtitle}{}
+%Raab et al.: Dominance and electro-communication in staged competition
+%%%%% overall style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% number the lines:
+\newcommand{\setlinenumbers}{true}
+
+% use double spacing:
+\newcommand{\setdoublespacing}{true}
+
+% show authors:
+\newcommand{\showauthors}{false}
+
+% show keywords:
+\newcommand{\showkeywords}{true}
+
+% show author contributions:
+\newcommand{\showcontributions}{false}
+
+% figures and captions at end:
+\newcommand{\figsatend}{false}
+
+% remove images from figures:
+\newcommand{\nofigs}{false}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% line numbering, spacing, authors, keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{ifthen}
+
+\usepackage{wasysym}
+
+\usepackage{xfrac}
+
+\ifthenelse{\boolean{\setlinenumbers}}{%
+\usepackage{lineno}\linenumbers}%
+{\newenvironment{linenomath}{}{}}
+
+\ifthenelse{\boolean{\setdoublespacing}}{%
+\usepackage{setspace}\doublespacing}{}
+
+\ifthenelse{\boolean{\showauthors}}{}{\author{}\date{}}
+
+\usepackage[inline]{enumitem}
+\newenvironment{keywords}%
+{\paragraph{Keywords}\begin{itemize*}[label={},itemjoin={~$|$\ },afterlabel={}]}%
+{\end{itemize*}\par}
+\usepackage{comment}
+\ifthenelse{\boolean{\showkeywords}}{}{\excludecomment{keywords}}
+
+\newenvironment{contributions}{\section{Author contributions}}{\par}
+\ifthenelse{\boolean{\showcontributions}}{}{\excludecomment{contributions}}
+
+
+%%%%% page style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}
+\pagestyle{myheadings}
+\markright{\runningtitle}
+
+%%%%% language %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel}
+
+%%%%% fonts %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{pslatex}   % nice font for pdf file
+
+%%%%% section style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sf,bf,it,big,clearempty]{titlesec}
+\setcounter{secnumdepth}{-1}
+
+%%%%% units %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[mediumspace,mediumqspace,Gray]{SIunits}      % \ohm, \micro
+
+%%%%% graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+%\pagecolor{white}
+\usepackage{graphicx}
+
+%%%%% figures %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% captions:
+\ifthenelse{\boolean{\setdoublespacing}}{%
+\usepackage[format=plain,singlelinecheck=off,labelfont=bf,font={small,sf,doublespacing}]{caption}}%
+{\usepackage[format=plain,singlelinecheck=off,labelfont=bf,font={small,sf}]{caption}}
+
+% put caption on separate float:
+\newcommand{\breakfloat}{\end{figure}\begin{figure}[t]}
+
+% references to panels of a figure within the caption:
+\newcommand{\figitem}[1]{\textsf{\bfseries\uppercase{#1}}\penalty10000 }
+% references to panels of a figure within the text:
+\newcommand{\panel}[1]{\textsf{#1}}
+% references to figures:
+\newcommand{\fref}[1]{\textup{\ref{#1}}}
+\newcommand{\subfref}[2]{\textup{\ref{#1}}\,\panel{#2}}
+% references to figures in normal text:
+\newcommand{\fig}{Fig.}
+\newcommand{\Fig}{Figure}
+\newcommand{\figs}{Figs.}
+\newcommand{\Figs}{Figures}
+\newcommand{\figref}[1]{\fig~\fref{#1}}
+\newcommand{\Figref}[1]{\Fig~\fref{#1}}
+\newcommand{\figsref}[1]{\figs~\fref{#1}}
+\newcommand{\Figsref}[1]{\Figs~\fref{#1}}
+\newcommand{\subfigref}[2]{\fig~\subfref{#1}{#2}}
+\newcommand{\Subfigref}[2]{\Fig~\subfref{#1}{#2}}
+\newcommand{\subfigsref}[2]{\figs~\subfref{#1}{#2}}
+\newcommand{\Subfigsref}[2]{\Figs~\subfref{#1}{#2}}
+% references to figures within brackets:
+\newcommand{\figb}{Fig.}
+\newcommand{\figsb}{Figs.}
+\newcommand{\figrefb}[1]{\figb~\fref{#1}}
+\newcommand{\figsrefb}[1]{\figsb~\fref{#1}}
+\newcommand{\subfigrefb}[2]{\figb~\subfref{#1}{#2}}
+\newcommand{\subfigsrefb}[2]{\figsb~\subfref{#1}{#2}}
+
+% figure placement:
+\ifthenelse{\boolean{\figsatend}}{%
+\setcounter{topnumber}{10}%
+\setcounter{totalnumber}{10}%
+\renewcommand{\textfraction}{0.0}%
+\renewcommand{\topfraction}{1.0}%
+\renewcommand{\floatpagefraction}{0.0}%
+\usepackage[nolists,markers,figuresonly]{endfloat}%
+\ifthenelse{\boolean{\nofigs}}{\renewcommand{\efloatseparator}{\mbox{}}}{}%
+\newcommand{\figurecaptions}{\pagestyle{empty}\clearpage\processdelayedfloats\renewcommand{\figureplace}{}}}%
+{\setcounter{topnumber}{1}%
+\setcounter{totalnumber}{2}%
+\renewcommand{\textfraction}{0.2}%
+\renewcommand{\topfraction}{0.8}%
+\renewcommand{\floatpagefraction}{0.7}%
+\newcommand{\figurecaptions}{}%
+}
+\newcommand*{\captionc}[1]{\captionof{figure}{#1}}
+
+% no images in figures:
+\ifthenelse{\boolean{\nofigs}}{%
+\newcommand{\showfigure}[1]{}}%
+{\newcommand{\showfigure}[1]{#1}}
+
+% references of equations
+\newcommand{\eqnref}[1]{Eq.\,(\ref{#1})}
+\newcommand{\eqnrefb}[1]{Eq.\,\ref{#1}}
+
+% bibliography ----------------------------------
+\usepackage[round,colon]{natbib}
+\renewcommand{\bibsection}{\section{References}}
+\setlength{\bibsep}{0pt}
+\setlength{\bibhang}{1.5em}
+\bibliographystyle{jneurosci}
+ 
+\usepackage[breaklinks=true,colorlinks=true,citecolor=blue!30!black,urlcolor=blue!30!black,linkcolor=blue!30!black]{hyperref}
+
+% notes -----------------------------------------
+\newcommand{\note}[2][]{\textcolor{red!80!black}{[\textbf{\ifthenelse{\equal{#1}{}}{}{#1: }}#2]}}
+\newcommand{\notejb}[1]{\note[JB]{#1}}
+\newcommand{\notetr}[1]{\note[TR]{#1}}
+
+% -----------------------------------------------
+\hyphenation{mo-ni-to-ring mo-da-li-ties court-ship}
+
+% fish species %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\aptero}{\textit{Apteronotus}}
+\newcommand{\Albi}{\textit{Apteronotus albifrons}}
+\newcommand{\albi}{\textit{A. albifrons}}
+\newcommand{\Lepto}{\textit{Apteronotus leptorhynchus}}
+\newcommand{\lepto}{\textit{A. leptorhynchus}}
+\newcommand{\Rostratus}{\textit{Apteronotus rostratus}}
+\newcommand{\rostratus}{\textit{A. rostratus}}
+\newcommand{\Macros}{\textit{Apteronotus macrostomus}}
+\newcommand{\macros}{\textit{A. macrostomus}}
+\newcommand{\Eigenmannia}{\textit{Eigenmannia}}
+\newcommand{\Eig}{\textit{Eigenmannia virescens}}
+\newcommand{\eig}{\textit{E. virescens}}
+
+\graphicspath{{figures/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%\newpage
+
+\section{Discussion}
+
+The work I am presenting in this thesis was inspired by and is based on the natural behavior of \lepto{} we observed during a field trip to Colombia in 2016 in the context of my master thesis. Since field studies on electric fish were rare and the development of precise hypotheses accordingly complicated, we just continuously recorded the electric signals of present fish during a two week period using a grid of 64 electrodes. Back in the lab, we developed and tested hypothesis while analyzing the recorded data. On site experiments in the field including recordings with simple handheld devices, i.e. transect recordings, suggested \lepto{} to coexist in high densities in the wild. Accordingly, we expected to observe a multitude of behaviors that can be associated with the social life of these fish. However, when we started to analyze the data we were overwhelmed by the large number of animals and the complexity of behaviors. We detected up to 26 fish in about 3.5\,m$^3$, exceeding our expectations by magnitudes and complicating reliable signal tracking. The applied algorithms only provided rather fragmentary EODf traces with many flawed connections and required extensive manual corrections (\figref{Colombia_traces}). Nevertheless, I was able to gain insight into the fish's natural spatio-temporal and even electrocommunication behavior.
+
+\begin{figure}[h!]
+  \centerline{\includegraphics[width=1\textwidth]{traces}}
+  \caption{\label{Colombia_traces} Long-term field recording of \macros{}, a member of the \lepto{} species group, in Colombia, 2016. EODs were recorded with a 64 electrode grid covering $3.5 \times 3.5$\,\meter\squared. \figitem{A} Eight days of EOD frequencies detected and tracked. Each reliably detected fish is indicated in a different color. Unreliable detections for which we need to further improve our algorithms are indicated in white. Dark gray areas indicate night time, light gray areas day time. \figitem{B} Spectrogram of a 40 minute long section of the recording from 14$^{th}$ April, 2016 with tracked EOD frequencies superimposed. The production of various EOD frequency rises results in crossings of EOD frequencies.}
+\end{figure}
+
+The tracking issues that arose from the complexity of electric recordings obtained in the wild led me to improve tracking algorithms in cooperation with Noah Cohen's Lab at the Johns Hopkins University in Baltimore, USA \notetr{(Chapter 2)}. These improvements were crucial for evaluating the complex electric (long-term) recordings obtained in subsequent experiments (and in the wild) since they reduced the expense of extensive EODf trace post-processing. Furthermore, the observed behavioral complexity shaping electric fish recordings in the wild clearly indicated the necessity for elaborate laboratory experiments to first understand the different aspects of the natural social life of \lepto{}, including the causalities of associated behaviors, before being able to make sense of the complex behavioral data contained in field recordings. 
+
+Accordingly, my thesis pursued two main objectives: (i) The development of an algorithm capable of tracking individual EODs in various electrode array settings and (ii) the utilization of this technique in different behavioral experiments aiming to advance our knowledge about the different aspects of the social life of \lepto{} and the causalities of associated behaviors. Ultimately, these steps aim towards the understanding of behaviors and events observed and recorded in the wild that, without knowledge gained from laboratory studies, remain difficult to interpret.
+
+In \notetr{Chapter 2} a semi-automated tracking system capable of tracking individual EODs based on individual specific EOD features is presented. The algorithm (i) combines previous approaches of solely using either EODf \citep{Henninger2020} or the spatial properties of an individual's electric field \citep{Madhav2018} as track feature and (ii) has been inspired by the general approach of biometric systems, i.e. detecting specific manifestations of an animal's behavior or appearance (biometric entities), in order to classify them according to predefined biometric profiles (e.g. different individuals, species, or behaviors, \citealp{Kuhl2013}). These advancements considerably increased tracking accuracy and reduced the effort of post-processing tracked EOD traces. Accordingly, the algorithm facilitates the evaluation of complex, multi-electrode recordings, enabling large scale studies on freely moving and interacting electric fish populations, even in high densities. 
+
+The development of this tracking algorithm was a requirement for the experiments described in \notetr{Chapter 3\& 4}. Utilizing these techniques, we have been able to monitor and characterize individual spatial-temporal behaviors within a group of 14 \lepto{} over 10 consecutive days (\notetr{Chapter 3}, \citealp{Raab2019}). In this experiment, fish have been housed in a large communal tank (2m$^3$ water capacity), stocked with several naturalistic habitats inspired by their natural environment observed in Colombia (\notetr{Fig. 1 A, B}). The evaluated movement patters suggested fish to mainly distribute independently from each other according to the presence of suitable habitats/shelters (\notetr{Figs. 1E \& 2C}). Interestingly, individual diurnal activity patterns correlated with EODf. In male \lepto{} higher EODf has often be associated with dominance \citep{Hagedorn1985, Dunlap2002, Triefenbach2008}. In our study, males with higher EODf showed enhanced explorative behavior during the night and increased territoriality during the day (\notetr{Fig. 3B}). Females, on the other hand, have previously been suggested to form no dominance hierarchy \citep{Hagedorn1985} or only a less pronounced one, causing females with higher EODf to be more likely found inside of shelter-tubes \citep{Dunlap2002}. We found higher EODf females to be more active during both day and night (\notetr{Fig. 3B}).
+
+In a subsequent experiment, we evaluated behaviors and interaction of unfamiliar pairs of \lepto{} in a staged competition experiment (\notetr{Chaper 4}, \citealp{Raab2021}). Fish with larger body-size usually won competitions, i.e. occupied the superior shelter during the light phase (\notetr{Fig. 2}). EODf and sex played a secondary role at best (\notetr{Table 1}). During the night phase of each trial, fish showed typical competition behaviors in terms of ritualized fighting supplemented by electrocommunication with rises (\notetr{Fig. 1}). Rises were almost exclusively emitted by losers (\notetr{Fig. 3A, B}), whereas agonistic interactions were exclusively initiated by winners. The evaluation of these behaviors in dependence on the fish's physical attributes suggests decision making during competitions in \lepto{} to be based on mutual assessment \citep{EnquistLeimar1987} and males to presumably be more motivated to win competitions \citep{ArnottElwood2008}. Even though rises presumably are costly in terms of increasing the probability of triggering winners into initiating agonistic actions within seconds and being chased for a longer duration (\notetr{Fig. 6}), losers continued to emit rises even after the winner of a trial was, according to a clear difference in communication behavior, presumably already determined \notetr{Fig. 3C, D}. Since both rise quantity and average duration of agonistic interactions increased with decreasing difference between the contestants' RHP (\notetr{Fig. 4C \& 5C}), i.e. according to mutual assessment, we suggest rises to signal a loser's motivation to continue assessment, ultimately aiming to reduce relative dominance and alter the skewness in general access to resources in its favor \citep{Sapolsky2005}. Interestingly, males losing against females seemed to be additionally motivated to continue assessment. In the respective trials males emitted rises at high rates, despite of large RHP differences to the winning females (\notetr{Fig. 4 A, C}).
+
+Our studies demonstrate the capability of our developed algorithms to track electric signals of individual electric fish, including electrocommunication signals, with unprecedented accuracy, even in complex long-term grid recordings (\notetr{Chapter 2}). This technique enabled us to obtain a plethora of undisturbed behavioral data on freely moving and interacting groups or pairs of \lepto{}. By evaluating the observed behaviors in the context of common competition- and dominance theories, we have been able to advance our knowledge about the secret social life of \lepto{} and set the stage for the success of future behavioral studies on the natural behavior of electric fish, including the analysis of complex recordings made in the wild. 
+
+\section{Implications for data processing}
+
+The technological advances of the last decades greatly increased our capabilities to study natural and undisturbed animal behaviors across various species \citep{Hughey2018, Jolles2021}. A common technique to monitor animals and their behaviors in their natural habitats is the utilization of bio-loggers, i.e. small animal mounted devices, equipped with different sensors (e.g. \citealp{Strandburg2015}). An alternative approach is to detect animals and their behaviors in external recordings, e.g. obtained with remote sensing devises like drones, equipped with different sensors or directed stationary camera-, microphone-, or electrode-setups \citep{Anderson2014, Dell2014, Hughey2018}. Each technique, however, comes with different challenges for data processing and handling. For example, external recording devises provide rather unspecific data that requires extensive processing in order to obtain reliable and exploitable behavioral data (e.g. \citealp{Kuhl2013, Dell2014}).
+
+Our approach of recording electric signals of varying numbers of freely moving electric fish using arrays of recording electrodes also provided rather unspecific data. In order to obtain distinct behavioral traces for individual fish from this data, we pursued and adapted the approach of an animal biometric system \citep{Kuhl2013}. Commonly, this approach involves pattern detection and classification by means of machine-learning or deep-learning algorithms. Specific animal biometrics, i.e. manifestations of an animal's behavior or appearance, are classified by comparing them to predefined biometric profiles, i.e. typical manifestations of a respective tracking class, like species, identity, or a certain behavior \citep{Burghardt2006, Sherley2010, Ernst2011}. However, this method only provides reliable results with static biometric profiles, showing little to no overlap in their definite characteristics. 
+
+Being restricted to EOD characteristics, biometric profiles corresponding to individual electric fish are rather unspecific. Spatial electric field properties change with a fish's movements \citep{Madhav2018} and EODf in the context of communication \citep{Zupanc2002, Triefenbach2008, Smith2013}. This variability results in potentially overlapping EOD features between individuals that consequently can lead to tracking errors. Nevertheless, both of these EOD features build the basis of one of the previous tracking approaches \citep{Madhav2018, Henninger2020}. Since both approaches track signals consecutively according to their temporal detection, their tracking accuracy further decrease for data sections where signals of single fish are temporarily not detected (e.g. detection losses caused by too large distances to recording electrodes). Both approaches achieve high tracking accuracy when evaluating low density fish populations. However, with increasing abundance and accordingly increasing overlap of individual EOD features (smaller EODf differences and similar locations of multiple fish), tracking issues accumulate and accuracy decreases respectively.
+
+To circumvent these issues we partly detach from the temporal detection of signals and instead track them by linking signal pairs in a succession corresponding to the smallest signal differences in 30 second data segments (\notetr{Fig. 5}). Consequently, we not only avoid tracking errors caused by temporal signal detection losses, but also ensure signal traces to be generated according to the highest similarity between signal pairs. Additionally, we further increase tracking accuracy by utilizing a combined signal error, considering both EODf and spatial field property difference between signal pairs \notetr{Fig. 3}. Temporal variations of within individual similarities of either one of these signal features, e.g. caused by rapid movements or the emission of a communication signal, can be compensated by the other and only results in this specific signal pair being connected later in the succession of connections established within the respective tracking segment. 
+
+However, despite our advancements in tracking accuracy, sporadic manual corrections of flawed EODf traces remain necessary. In its current state, the present algorithm establishes new signal pair connections solely based on their similarities. Indeed, even better tracking results could be achieved by implementing signal trace predictions that dynamically adapt to already established connections within a current tracking segment. Corresponding implementations, however, would require a even more dynamic tracking algorithm and manifold required computational power and time, beyond efficient scientific feasibility. In future studies, a neural network could be trained on tracking individual EODf traces, similar to existing pose detection algorithms (e.g. \citealp{Mathis2018}). These approaches, however,  require extensive training data-sets in order to preform with reliable accuracy. Accordingly, our algorithms and the data-sets analyzed with them in the context of this thesis represent the basis for the development of such an even more advanced tracking system in the future.
+
+In conclusion, our developed algorithms not only improved tracking accuracy of wave-type electric fish beyond previous approaches \citep{Madhav2018, Henninger2020}, but also advanced the general approach of biometric systems \citep{Kuhl2013}. By refraining from static biometric profiles and rigid classifications in favor of probabilistic time-variant classifications, we enhanced the general applicability of this method. Our method only relies on the extraction of specific features suitable for describing a tracking class in external recordings. In our case, this corresponds to EOD features extracted from electrode grid recordings and used for tracking electric signals of individual fish. However, since these tracking features can be anything detectable in external recordings of any modality, our method is not limited to tracking electric fish, but can also be adapted to tracking tasks across various animal species, or even beyond behavioral studies or science in general. 
+
+A major benefit of machine-aided analysis is the capability to process enormous amounts of data (mainly automatically). This is not only suitable to solidify specific scientific statements \citep{Gomez2014, Dell2014}, but also enables important explorative studies. In our case, machine-aided analysis was crucial to enable our explorative recordings of populations of \lepto{} in their natural habitats in Colombia. And even though we were unable to understand the specific significance and causalities of observed behavioral events, these field trips led to specific hypotheses and the development of the laboratory experiments described in \notetr{Chapter 3\& 4} and further discussed below. 
+
+\section{Implications for the social life of \lepto{}}
+
+Behavior does not occur in a contextual vacuum \citep{Rendall1999, Seyfarth2017, Henninger2018}. Accordingly, in order to understand the meaning and causalities of specific behavioral events, a detailed understanding of the framework in which behaviors occur is vital (e.g. \citealp{Rendall1999, Henninger2018}). A crucial aspect shaping the scope of possible interpretations of social behaviors is the structure of organization of an animal's social environment. For example, specific communication signals in group living species can frequently be associated with behavioral coordination or cooperation (e.g. group cohesion, \citealp{Demartsev2018}, collective anti-predator defense \citealp{Schibler2007}; reconciliation, \citealp{Cheney1995}, etc.). However, for solitary species, a coherence between communication and mate attraction or agonistic actions is way more likely, simply because of their respective way of life \citep{Cornhill2020}. 
+
+The social organization of \lepto{} has hardly been addressed in previous studies. For other electric fish species, primarily belonging to the family of African \textit{Mormyrides}, different behavioral patterns have been identified suggesting them to be group living. Some electric fish species form shoals (e.g. \textit{Mormyrus rume proboscirostris}, \citealp{Worm2021}, \textit{Mormyrops anguilloides}, \citealp{Arnegard2005}, or \Eigenmannia, \citealp{Oestreich2005}), emit communication signals that can be associated with group cohesion \citep{Arnegard2005, Worm2021}, and even forage or hunt collectively in a group \citep{Arnegard2005, Bastos2021}. 
+
+For \lepto{} corresponding observations are sparse. In the laboratory \lepto{} distribute independent from each other according to the availability of suitable shelters (\notetr{Fig. 1E, 2C}). Similar observations could also be made in the field (own observations in Colombia, 2016, 2019, \citealp{Stamper2010}). On the other hand, \citet{Stamper2010} also observed \lepto{} in a forced choice experiment to reliably approach tubes with EOD mimics of con-specifics instead of non-stimuli tubes. However, considering \lepto{}, compared to other electric fish species,  showing increased aggression towards con-specifics (e.g. \citealp{Triefenbach2008}), this approaching behavior is presumably rather associated with initial assessment and competition than with the intention of shoaling. 
+
+Nevertheless, Gymnotiform fishes, including \lepto{}, make up to 70\,\% of the biomass of large rivers in South America \citep{Marrero1991, Cox2004, Crampton2011}. We ourselves observed high densities of \lepto{} in a small river in Colombia (up to 26 individuals in about 15\,m$^2$, \subfigref{Colombia_traces}{A}). However, neither ourselves nor other studies observed or reported individual behaviors as evidence for \lepto{} to be a group living species, e.g. collective movement or cooperation. Therefore, we suggest \lepto{} to actually be a rather solitary living species that is forced to share its habitat with con-specific because of their high abundance. Indeed, individual fish could, nevertheless, benefit passively from the presence of con-specifics, e.g. by means of on overall reduced individual predation risk or increased reproductive success \citep{Cote1995, Clutton-Brock1999, Sword2005, Bilde2007}. On the other hand, fish also have to face the challenges arising from increased intra-specific rivalry for limited resources (e.g. \citealp{Janson1985, Chapman1995, Markham2017}). The diversity of social interactions in \lepto{}, that we observed and evaluated in the process of this thesis, could have been developed in order to facilitate the frequent social encounters and interactions that inevitably result from their high abundance in natural habitats.
+
+%\subsubsection{Behavioral interactions in \lepto{}}
+\subsection{Assessment during competitions in \lepto{}}
+
+\begin{figure}[h!]
+  \centerline{\includegraphics[width=1\textwidth]{stationarity}}
+  \caption{\label{Colombia_stationarity} Spatial behavior of a single \macros{} detected and tracked consecutively for four days. Heat-maps and contour lines show the fish's probability of presence across the monitored 3.5$\times$3.5\,m$^2$ area of the river during the night (top panels) and day (bottom panels). Red contour lines include the area the fish spends more than 50\,\% of the time in, the orange lines more than 75\,\% of the time respectively. Even though the fish certainly shows movement behaviors, especially during the night, it remains strikingly stationary in the bottom-right corner of the grid for four consecutive days.}
+\end{figure}
+
+In the presence of con-specifics, animals frequently rival for limited resources, and fighting is usually a key behavior to secure access \citep{Cluttonbrock1979, Chapman1995, Markham2015}. However, competition is costly by means of time and energy allocated to it and the increased risk of injury or death (e.g. \citealp{Briffa2004}). In order for competitions to be evolutionary stable, potential benefits always need to outweigh the associated costs \citep{ArnottElwood2009}. Accordingly, different species developed various mechanisms to economize competitions, e.g. specific assessment strategies \citep{EnquistLeimar1987, Payne1998, Taylor2003} or a dominance hierarchy to regulate access to resources (e.g. \citealp{Janson1985, Sapolsky2005}). Which mechanism eventually manifests in a given species depends on its social organization and given environmental situations. The development of a complex dominance hierarchy is most beneficial if repetitive rivalry with the \emph{same} individuals are likely. Developing elaborated assessment strategies can be useful in both, when frequently competing with \emph{same} and \emph{different} individuals. When competitions are rather scarce or resources are not limited, presumably neither of these mechanisms will develop, because the costs of developing associated behaviors are not covered by the resulting benefits.
+
+In order to understand how \lepto{} resolves conflicts, we evaluated their competition behavior during staged competitions (\notetr{Chapter 3}, \citealp{Raab2021}). Competitions were usually won by the larger individual, suggesting resource holding potential (RHP, \citealp{Parker1974}) in \lepto{}, as an individual's potential to inflict and endure damage \citep{Archer1988}, to be primarily based on body-size. In our experiments additional factors influencing the outcome of competitions, like positional advantages, were intentionally eliminated by the experimental design. However, in the fish's natural habitats, where we observed highly stationary fish (Colombia, 2016, \figref{Colombia_stationarity}), positional advantages of a resident could still bias competitions to be rather won by residents than intruders, as observed in other species (e.g. \citealp{Alcock1997}). 
+
+In some species, animals actively assess their individual chances of winning competitions by interpreting passive cues and active signals indicating their opponent's fighting motivation and capability \citep{Cluttonbrock1979, EnquistLeimar1987}. This information exchange can often already be sufficient to resolve conflicts without the necessity of costly, escalating physical fighting \citep{Parker1974, Cluttonbrock1979, Jason1990}. In \lepto{} observed competitions comprised ritualized fighting \citep{Triefenbach2008} accompanied by electrocommunication signals \citep{Smith2013} of which we evaluated rises. Agonistic events were initiated by the winners of trials, rises primarily emitted by the respective losers. Both behaviors occurred steadily frequent within trials, and their extent similarly increased with decreasing size/RHP difference between competitors. This suggests (i) behavioral decision making in competitions between pairs of \lepto{} to be based on mutual assessment and (ii) both ritualized fighting events and rises to be important in terms of information gathering during this process. These conclusions, again, fit our observations made in the fish's natural habitats. As aforementioned, \lepto{} can be found in high densities in the wild. However, at the same time we only found little food items in the corresponding clear streams. With many fish to compete over sparse, high value resources, the development of behaviors associated with mutual assessment is reasonable and the most economic approach to resolve the corresponding conflicts \citep{ArnottElwood2009}.
+
+\subsubsection{Electrocommunication with rises}
+
+Our competition experiment suggests rises to be emitted by losers in order to signal their motivation to continue assessment. Thus, during competitions, rises can be assumed to be an important signal to gain valid information about a con-specific in the process of mutual assessment. Accordingly, their emission should be net beneficial and evolutionary stable, even though being costly in terms of increasing chances of being attacked or chased for a longer duration (\notetr{Fig. 6}). However, rises are rather generic signals. They show huge variations in terms of duration (lasting from seconds up to many minutes) and EOD frequency increase (up to 68\,Hz). In some configurations they can potentially even be confused with other active EOD frequency modulations observed in \lepto{}, e.g. a short jamming-avoidance response \citep{Tallarovic2005}. The structural variability of rises argues against them to be specific signals of high informative value \citep{Seyfarth2003}. However, we found no behavioral or contextual difference between rises of different size or duration. We suggest the specific meaning of rises to arise from the behavioral context they are emitted in \citep{Seyfarth2003}. During competitions rises seem to signal motivation \citep{Raab2021}. However, further applications of rises in various behavioral contexts could potentially be revealed in detailed observations of whole populations of \lepto{} under more naturalistic conditions.
+
+\subsection{Implications on the social hierarchy in \lepto{}}
+
+Even though elaborate assessment strategies can economize competitions \citep{ArnottElwood2009}, costs still accumulate when animals rival with the same individuals over and over again. To further economize these rivalries, some species fight in order to establish dominance hierarchies, where an animal's access to resources is determined by its social status (e.g. \citealp{Wauters1992, Sapolsky2005, Taves2009}) and mutual knowledge about hierarchical ranks prevent repetitive fights among familiar individuals \citep{Cluttonbrock1979, Fernald2014, Cornhill2020}.
+
+Dominance hierarchies have also been suggested for various electric fish species \citep{Westby1970, Fugere2011, Silva2012}, including \lepto{} \citep{Hagedorn1985, Dunlap2002, Stamper2010, Henninger2018}. For the latter, social dominance previously has mainly (or even exclusively) been attributed to males \citep{Hagedorn1985, Dunlap2002}. More dominant males have been reported to occupy higher quality shelters, preferably alone \citep{Dunlap2002}, and to show increased participation in reproduction \citep{Hagedorn1985, Henninger2018}. Females, on the other hand, have been suggested to either form no dominance hierarchy at all \citep{Hagedorn1985}, or only a distinct one, whereby less dominant females are more likely to be found outside of shelter tubes \citep{Dunlap2002}. 
+
+As discussed above, we suggest \lepto{} to probably rather be a solitary living species, forced to share their natural habitats with con-specifics because of their high abundance. Dominance in \lepto{} can, therefore, be assumed to be rather resource based, as in other solitary species (e.g. \citealp{Cigliano1993}), instead of coming along with complex social structures and group behaviors, like, for example, the development of a leader-follower dynamic \citep{Strandburg2018}. Accordingly, determining whether the social life of \lepto{} is shaped by a social hierarchy or repetitive competitions over resources is complicated in experiments with short observation times, but can potentially be answered by interpreting individual behaviors in long term observations. 
+
+As aforementioned, we found \lepto{} in abundance in the wild, where individuals frequently remained rather stationary over several days (\figsref{Colombia_traces},\fref{Colombia_stationarity}). Accordingly, frequent interactions and rivalry with the same individuals are inevitable, and the development of a dominance hierarchy would be the most efficient way to distribute resources and reduce the necessity of repetitive, costly fights \citep{Sapolsky2005}. Further support for the social life of \lepto{} being shaped by a dominance hierarchy instead of repetitive competitions arises from their observed communication behavior. Rises have only occasionally been observed in the wild and their quantity seemed to decrease throughout the two weeks of our first laboratory experiment (\notetr{Fig. 1C}). Since we could further show that rises are reliably emitted in the context of competition between pairs of \lepto{} \citep{Raab2021}, this suggests competitions to be rather sparse in the wild and to decrease over time in artificially compound populations. Consequently, rises and competitions could be assumed to be mainly used to establish dominance during initial encounters, which then regulates access to resources and prevents the high costs of repetitive fighting.
+
+\subsubsection{Skewness of the social hierarchy in \lepto{}}
+
+In our competition experiments dominance is attained through agonistic interactions and resources are claimed entirely by dominants. At first glance this suggests a despotic dominance hierarchy for \lepto{} \citep{Kappeler2008}. On the other hand, these agonistic interaction resemble non-escalating ritualized fights \citep{Triefenbach2008} which are often used to intimidate con-specifics and obtain or maintain dominance in rather egalitarian hierarchies across species \citep{Sapolsky2005}. Furthermore, we did not observe active displacement from micro-habitats in our first group experiment, indicating fish to tolerate the presence of con-specifics and, consequently, to share available resources. We suggest our contradictory observation of fish monopolizing resources in our competition experiments to result from the very limited resources in this experiment that could hardly be shared anyways. Further support for more egalitarian dominance hierarchies in \lepto{} comes from their observed communication behavior during staged competitions. Losers continued to emit rises at a constant rate and thereby stimulated agonistic attacks, even though the outcome of competitions were presumably already set and mutually recognized within the initial phase of interactions. However, continued mutual assessment could be used to adjust relative dominance between competitors and thereby the skewness in access to resources, which can be assumed to be obsolete in despotic hierarchies. Finally, our hypothesis of a rather egalitarian hierarchy in \lepto{} is further supported by the preliminary observation of multiple males participating in reproduction in the wild \citep{Henninger2018}. 
+
+\subsubsection{EODf as signal of dominance}
+
+In order for dominance hierarchies to economically resolve conflicts between con-specifics, individuals need to be able to assess each other's social status. Accordingly, different species developed specific signals conveying corresponding information \citep{Cluttonbrock1979, Fernald2014, Cornhill2020}. When fish are not in each other's direct proximity, \lepto{} can exclusively exchange information with con-specifics using their EODs \citep{Knudsen1975, Henninger2018, Henninger2020, Benda2020}. Therefore, these electric signals would be most suitable to signal dominance in \lepto{}. Indeed, some studies found dominance to correlate with EODf in males, and to some extend also in females \citep{Hagedorn1985, Dunlap2002, Triefenbach2008}. And, at least in males, EODf has sometimes been found to correlate with body size \citep{Dunlap2002, Triefenbach2008}. 
+
+In our competition experiments we did not find a correlation between body size and EODf in either sex. Nevertheless, the accuracy of our generalized linear model predicting winners of competitions increased slightly when including EODf as an additional parameter besides body-size (\notetr{Fig. S-3}). Furthermore, we clearly found EODf dependent spatio-temporal movement traits for both sexes in our first laboratory experiment, which, at least for males, can also be associated with dominance or corresponding displays (\notetr{Fig. 3B, D}). Both our own observations as well as the inconsistency across studies in finding a link between EODf and body size or dominance suggest EODf to be, at best, an unreliable predictor for dominance. Nevertheless, as already mentioned, a fish's EODs are the only source of information that can be accessed by con-specifics from afar. Accordingly, EODf could be used as an initial, rough estimate of a potential opponent's body size/RHP or dominance. 
+
+As discussed previously, we suggest rather egalitarian dominance hierarchies for populations of \lepto{}. Here, the evolutionary pressure to compete with con-specifics can be assumed to be decreased, compared to despotic hierarchies. Accordingly, validating the rough dominance estimate obtained from a potential competitor's EODf by approaching them and risking physical competition could be to costly to outweigh the potential benefits. \lepto{} could therefore rely on EODf as a signal of dominance, when the availability of resources is generally sufficient and fish mainly perceive each other electrically, e.g. in our first open space laboratory experiment or in the wild.
+
+\section{Sexually dimorphic behavioral traits}
+
+In our experiments we repeatedly found sexually dimorphic behavioral traits. For males, we could identify distinct movement behaviors that can be associated with dominance or interpreted as corresponding displays, i.e. territorial at shelters during the day and increased exploration behavior during the night (\notetr{Fig. 3B, D}). Furthermore, the correlation between larger body-size and winning staged competitions was stronger in males compared to females (\notetr{Fig. 2B-E}), and males emit especially many rises when losing against way larger females (\notetr{Fig. 4 A, C}). Together with previous observations of males, compared to females, showing increased territoriality \citep{Dunlap2002}, and increased overall aggression towards con-specifics, this suggests a generally boosted motivation in males to win competitions and gain or maintain dominance. These motivational differences could explain the observed behavioral divergences between males and females \citep{ArnottElwood2008}. But what is the reason for this sexually dimorphic motivational difference? 
+
+% boosted motivation in males
+In our experiment we were not able to clearly determine the cause for the suggested motivational differences between the sexes and the resulting sexually dimorphic behavioral traits. However, we suggest a sexually dimorphic valuation of resources, e.g. food, shelter, etc., where access is associated with dominance \citep{Janson1985, Blumstein2001, Charpentier2005, Dunham2008}, to be a possible cause for the respectively observed behavioral differences. But why should resources be rated as more valuable by males than by females? 
+
+\lepto{} being sexually quite monomorphic suggests requirements for food or shelter, and therefore their valuation, to be rather similar for both sexes. However, a possible divergence could arise from \lepto{}'s mating behavior. During the mating season, males are known to compete for females, which after an extensive mating ritual spawn a single egg in a location save from external threats, e.g. strong currents or predators. Assuming, females assess the quality of a male by assessing the suitability of its shelter for reproduction, shelters could be some kind of secondary sexual characteristic for males, and therefore increase their motivation to compete for them. However, in \rostratus, a close relative of \lepto{}, preliminary observations suggest males to visit females in the context of mating, rather than \textit{vica versa}, which contradicts our hypothesis.  
+
+
+% dominance in females 
+
+\subsection{Females in the dominance hierarchy of \lepto{}}
+
+As discussed priorly, the observed behavioral traits of females in our experiments suggest them to be less eager to prevail in social contexts, i.e. contrary to males we did not find movement behaviors that can be associated with dominance or corresponding displays and body-size was less predictive for winning competitions. These observations are consistent with previous studies suggesting females to be overall less aggressive and more tolerant towards the presence of con-specifics compared to males (e.g. \citealp{Dunlap2002}). Accordingly, the only competition trial where we observed both contestants sharing the superior shelter in the end was won by a female (the other contestant was male; loser identified by rise quantity). Altogether this more peaceful and passive behavioral characteristic of females could, indeed, be associated with them not forming a dominance hierarchy as suggested in previous studies \citep{Hagedorn1985, Dunlap2002}. 
+
+On the other hand, fish of both sexes showed similar (even though not identical) competition behaviors during staged competition. A possible, but rather hypothetical explanation could be that females are evolutionary less reliant on dominance and associated benefits. The rather egalitarian dominance hierarchy, previously suggested for \lepto{} in this thesis (see above), could generally provide sufficient resources for females and limit their active participation in dominance fights to occasions where resources are scarce, e.g. in our competition experiments.
+
+\section{Open ends and perspectives}
+
+In the presented thesis I demonstrate how behavioral observations in an animal's natural environment can lead to specific scientific questions and the development of elaborate techniques and laboratory experiments aiming to answer them. In our case, we developed tools, techniques, and laboratory experiments to advance our knowledge about the behavioral adaptations in \lepto{} enabling them to successfully inhabit their natural habitats in high densities.
+
+% competition
+Our results suggest \lepto{} to economize the inevitably frequent conflicts resulting from their high abundance in the wild through mutual assessment. By means of ritualized fighting and information exchange via electrocommunication, contestants gather information about each other's resource holding potential and adapt their behavior according to the disparity. In this process, rises seem to be important signals to coordinate competitions. With their emission, subordinates seem to signal their motivation to continue assessment by stimulating ritualized fighting. In order to further increase our knowledge about the different social aspects of competitions in \lepto{} we plan to adjust the experimental design of future experiments to enable the additional detection and evaluation of chirps. These communication signals have already in previous studies been associated with agonistic interactions and could therefore reveal further details of the fish's competition behavior, when included in our analysis. 
+
+% social organization in \lepto{} - how to verify it ?
+The evaluation of individual behavioral traits and social interactions of \lepto{} in the context of this thesis provides a strong basis for developing hypotheses regarding the overall social structure in populations of \lepto{}. Together with our observations from the field, the conclusions of our laboratory experiments indicate \lepto{} to (i) develop dominance hierarchies, where (ii) an individual's access to resources is proportional to its social status, and (iii) males to be more motivated than females to gain dominance and associated benefits.
+
+Even though all of our conclusions derive from elaborate and detailed behavioral observations, some assume unverified causalities and require further scientific validation. Accordingly, subsequent future experiments should increase in complexity and gradually approximate natural conditions in order to create experimental setups where these questions can potentially be answered. For example, detailed observation of competitions and associated behaviors in small groups of \lepto{} competing over divisible and measurable resources (e.g. distributed small food items or shelters of varying quality as in \citet{Dunlap2002}) could help to clarify the skewness in access to resources across the dominance hierarchy in populations of \lepto{}. Furthermore, such elaborate experiments could potentially lead to the discovery of previously unrevealed behavioral traits and causalities that only emerge and are observable in more complex social and environmental settings. The ultimate prove of our hypotheses could be obtained by inducing breeding conditions and evaluating individual reproductive success throughout a group of \lepto{}. However, since breeding conditions induce complex changes in an animals behavior, corresponding experiments should be conducted only after the evaluation of individual behaviors and interaction within smaller groups in complex environments (as suggested above) have been exploited. Breeding experiments could, furthermore, reveal interesting behavioral changes that complement our understanding about the social life of \lepto{}. For example, females could become more active and motivated to win competitions, because their valuation of food probably increases due to increased energy demand and their valuation of shelters increase since they correspond to save spawning sites.
+
+% How to get back to the field ? 
+As repetitively mentioned throughout this thesis, our work was inspired by the complexity of electric recordings obtained form the fish's natural habitats. With the behavioral observations of our laboratory experiments we already developed a strong basis for identifying specific behaviors solely based on characteristic electric signal changes and associated spatio-temporal behaviors. For example, we showed that rises frequently trigger agonistic interactions that come along with high velocity movement behaviors. Both electric and spatio-temporal manifestations of behaviors can also be extracted from grid recordings of electric fish in the wild. Accordingly, further laboratory experiments could provide the basis to develop a electro-spatio-temporal ethogram of \lepto{}. Such an ethogram could then be utilized to detect specific behaviors and interactions in the wild and validate their significance and causalities in the environments these behaviors have originally evolved to.  
+
+\bibliographystyle{jneurosci}
+\bibliography{../journalsabbrv,../references}
+
+\end{document}
