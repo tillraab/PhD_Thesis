@@ -1,0 +1,410 @@
+\documentclass[11pt,pdftex,]{book}
+\setlength{\parskip}{0pt}
+% number the lines:
+
+%\fancyfoot[LE,RO]{\thepage}
+
+\newcommand{\setlinenumbers}{false}
+
+% use double spacing:
+\newcommand{\setdoublespacing}{false}
+
+% show authors:
+\newcommand{\showauthors}{true}
+
+% show keywords:
+\newcommand{\showkeywords}{false}
+
+% show author contributions:
+\newcommand{\showcontributions}{false}
+
+% figures and captions at end:
+\newcommand{\figsatend}{false}
+
+% remove images from figures:
+\newcommand{\nofigs}{false}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% line numbering, spacing, authors, keywords %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{ifthen}
+
+\usepackage{wasysym}
+
+\ifthenelse{\boolean{\setlinenumbers}}{%
+\usepackage{lineno}\linenumbers}%
+{\newenvironment{linenomath}{}{}}
+
+\ifthenelse{\boolean{\setdoublespacing}}{%
+\usepackage{setspace}\doublespacing}{}
+
+\ifthenelse{\boolean{\showauthors}}{}{\author{}\date{}}
+
+\usepackage[inline]{enumitem}
+\newenvironment{keywords}%
+{\paragraph{Keywords}\begin{itemize*}[label={},itemjoin={~$|$\ },afterlabel={}]}%
+{\end{itemize*}\par}
+\usepackage{comment}
+\ifthenelse{\boolean{\showkeywords}}{}{\excludecomment{keywords}}
+
+\newenvironment{contributions}{\section{Author contributions}}{\par}
+\ifthenelse{\boolean{\showcontributions}}{}{\excludecomment{contributions}}
+
+
+%%%%% page style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	%inner=2.5cm, % Inner margin
+	%outer=3.8cm, % Outer margin
+	inner=3cm,
+	outer=2cm,
+	bindingoffset=.5cm, % Binding offset
+	top=2.5cm, % Top margin
+	bottom=2.5cm, % Bottom margin
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+%\pagestyle{myheadings}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyhead[LE]{\leftmark}
+\fancyhead[RO]{\rightmark}
+
+%%%%% language %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+
+%%%%% fonts %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{pslatex}   % nice font for pdf file
+
+%%%%% section style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sf,bf,it,big,clearempty]{titlesec}
+\setcounter{secnumdepth}{1}
+
+%%%%% units %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[mediumspace,mediumqspace,Gray]{SIunits}      % \ohm, \micro
+\usepackage{textcomp}
+%%%%% graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage{wrapfig}
+%\pagecolor{white}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\newcommand{\trh}{\rule[-1ex]{0pt}{3.5ex}}
+\newcommand{\trt}{\rule{0pt}{2.5ex}}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+% references of equations
+\newcommand{\eqnref}[1]{Eq.\,(\ref{#1})}
+\newcommand{\eqnrefb}[1]{Eq.\,\ref{#1}}
+
+\usepackage{xr}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+
+%%%%% figures %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% captions:
+\ifthenelse{\boolean{\setdoublespacing}}{%
+\usepackage[format=plain,singlelinecheck=off,labelfont=bf,font={small,sf,doublespacing}]{caption}}%
+{\usepackage[format=plain,singlelinecheck=off,labelfont=bf,font={small,sf}]{caption}}
+
+% put caption on separate float:
+\newcommand{\breakfloat}{\end{figure}\begin{figure}[t]}
+
+% references to panels of a figure within the caption:
+\newcommand{\figitem}[1]{\textsf{\bfseries\uppercase{#1}}\penalty10000 }
+% references to panels of a figure within the text:
+\newcommand{\panel}[1]{\textsf{#1}}
+% references to figures:
+\newcommand{\fref}[1]{\textup{\ref{#1}}}
+\newcommand{\subfref}[2]{\textup{\ref{#1}}\,\panel{#2}}
+% references to figures in normal text:
+\newcommand{\fig}{Fig.}
+\newcommand{\Fig}{Fig.}
+\newcommand{\figs}{Figs.}
+\newcommand{\Figs}{Figs.}
+\newcommand{\figref}[1]{\fig~\fref{#1}}
+\newcommand{\Figref}[1]{\Fig~\fref{#1}}
+\newcommand{\figsref}[1]{\figs~\fref{#1}}
+\newcommand{\Figsref}[1]{\Figs~\fref{#1}}
+\newcommand{\subfigref}[2]{\fig~\subfref{#1}{#2}}
+\newcommand{\Subfigref}[2]{\Fig~\subfref{#1}{#2}}
+\newcommand{\subfigsref}[2]{\figs~\subfref{#1}{#2}}
+\newcommand{\Subfigsref}[2]{\Figs~\subfref{#1}{#2}}
+% references to figures within brackets:
+\newcommand{\figb}{Fig.}
+\newcommand{\Figb}{Fig.}
+\newcommand{\figsb}{Figs.}
+\newcommand{\Figsb}{Figs.}
+\newcommand{\figrefb}[1]{\figb~\fref{#1}}
+\newcommand{\Figrefb}[1]{\Figb~\fref{#1}}
+\newcommand{\figsrefb}[1]{\figsb~\fref{#1}}
+\newcommand{\Figsrefb}[1]{\Figsb~\fref{#1}}
+\newcommand{\subfigrefb}[2]{\figb~\subfref{#1}{#2}}
+\newcommand{\Subfigrefb}[2]{\Figb~\subfref{#1}{#2}}
+\newcommand{\subfigsrefb}[2]{\figsb~\subfref{#1}{#2}}
+\newcommand{\Subfigsrefb}[2]{\Figsb~\subfref{#1}{#2}}
+
+% figure placement:
+\ifthenelse{\boolean{\figsatend}}{%
+\setcounter{topnumber}{10}%
+\setcounter{totalnumber}{10}%
+\renewcommand{\textfraction}{0.0}%
+\renewcommand{\topfraction}{1.0}%
+\renewcommand{\floatpagefraction}{0.0}%
+\usepackage[nolists,markers,figuresonly]{endfloat}%
+\ifthenelse{\boolean{\nofigs}}{\renewcommand{\efloatseparator}{\mbox{}}}{}%
+\newcommand{\figurecaptions}{\pagestyle{empty}\clearpage\processdelayedfloats\renewcommand{\figureplace}{}}}%
+{\setcounter{topnumber}{1}%
+\setcounter{totalnumber}{2}%
+\renewcommand{\textfraction}{0.2}%
+\renewcommand{\topfraction}{0.8}%
+\renewcommand{\floatpagefraction}{0.7}%
+\newcommand{\figurecaptions}{}%
+}
+\newcommand*{\captionc}[1]{\captionof{figure}{#1}}
+
+% no images in figures:
+\ifthenelse{\boolean{\nofigs}}{%
+\newcommand{\showfigure}[1]{}}%
+{\newcommand{\showfigure}[1]{#1}}
+
+
+% bibliography ----------------------------------
+%\usepackage[round,colon]{natbib}
+
+%\usepackage[sectionbib]{natbib}
+%\usepackage{chapterbib}
+%\renewcommand{\bibsection}{\section{References}}
+%\setlength{\bibsep}{2pt}
+%\setlength{\bibhang}{1.5em}
+%\bibliographystyle{jneurosci}
+
+\usepackage[round,colon]{natbib}
+%\renewcommand{\bibsection}{\section*{References}}
+\renewcommand{\bibsection}{{\Huge\textbf{Bibliography}}\vspace{2cm}}
+\setlength{\bibsep}{8pt}
+\setlength{\bibhang}{1.5em}
+\bibliographystyle{jneurosci}
+ 
+%\usepackage[breaklinks=true,colorlinks=true,citecolor=blue!30!black,urlcolor=blue!30!black,linkcolor=blue!30!black]{hyperref}
+\usepackage[breaklinks=true,colorlinks=true,citecolor=black,urlcolor=black,linkcolor=black]{hyperref}
+
+% chapter format --------------------------------
+%\usepackage{titlesec}
+%
+%\titleformat{\chapter}[display]
+%  {  \normalfont\huge\bfseries\centering}{\centering\chaptertitlename\ \thechapter}{20pt}{\Huge}
+%\titlespacing*{\chapter} 
+%  {0pt}{50pt}{40pt}
+
+% notes -----------------------------------------
+\newcommand{\note}[2][]{\textcolor{red!80!black}{[\textbf{\ifthenelse{\equal{#1}{}}{}{#1: }}#2]}}
+\newcommand{\notejb}[1]{\note[JB]{#1}}
+\newcommand{\notetr}[1]{\note[TR]{#1}}
+
+% -----------------------------------------------
+\hyphenation{mo-ni-to-ring mo-da-li-ties court-ship}
+
+% fish species %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\aptero}{\textit{Apteronotus}}
+\newcommand{\Albi}{\textit{Apteronotus albifrons}}
+\newcommand{\albi}{\textit{A. albifrons}}
+\newcommand{\Lepto}{\textit{Apteronotus leptorhynchus}}
+\newcommand{\lepto}{\textit{A. leptorhynchus}}
+\newcommand{\Rostratus}{\textit{Apteronotus rostratus}}
+\newcommand{\rostratus}{\textit{A. rostratus}}
+\newcommand{\Macros}{\textit{Apteronotus macrostomus}}
+\newcommand{\macros}{\textit{A. macrostomus}}
+\newcommand{\Eig}{\textit{Eigenmannia virescens}}
+\newcommand{\Eigenmannia}{\textit{Eigenmannia}}
+\newcommand{\eig}{\textit{E. virescens}}
+\newcommand{\sterno}{\textit{Sternopygus}}
+
+\graphicspath{{figures/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%\newpage
+
+%\maketitle
+
+\begin{titlepage}
+\begin{center}
+
+\vspace*{.06\textheight}
+%{\scshape\LARGE Eberhard Karls Universität Tübingen\par}\vspace{1.5cm} % University name
+%\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+% \hrule\vspace{0.4cm} % Horizontal line
+
+{\huge \bfseries Social structures and interactions in electric fish explored by large-scale signal tracking
+\par}\vspace{0.4cm} 
+
+% adaptive, probabilistic, 
+
+%Exploration of social structures and interactions by means of custom signal tracking\\in an electric fish
+
+% Thesis title
+% \hrule % Horizontal line
+\vfill
+\vspace{3cm}
+{\Large \textbf{Dissertation}\\
+der Mathematisch-Naturwissenschaftlichen Fakultät\\
+der Eberhard Karls Universität Tübingen\\
+zur Erlangung des Grades eines\\
+Doktors der Naturwissenschaften\\
+(Dr. rer. nat.)\\}
+\vspace{3.5cm}
+{\Large vorgelegt von\\Till Raab\\aus Tübingen\\}
+\vspace{4cm}
+{\Large Tübingen\\\vspace{0.1cm}
+2021}\\[4cm] % Date
+%\includegraphics{Logo} % University/department logo - uncomment to place it
+ 
+\vfill
+\end{center}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\noindent
+{\large Gedruckt mit Genehmigung der Mathematisch-Naturwissenschaftlichen Fakultät der\\
+Eberhard Karls Universität Tübingen.\\}
+\vspace{1cm}
+
+\hspace{-0.7cm}
+\noindent
+\begin{minipage}{0.49\textwidth}
+{\large Tag der mündlichen Qualifikation:\\
+Dekan:\\
+1. Berichterstatter/-in:\\
+2. Berichterstatter/-in:\\}
+\end{minipage}\hfill
+\begin{minipage}{0.49\textwidth}
+\noindent
+{\large 24.03.2022\\
+Prof. Dr. Thilo Stehle\\
+Prof. Dr. Jan Benda\\
+Prof. Dr. Steffen Hage\\}
+\end{minipage}
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{Roman}
+\setcounter{tocdepth}{1}
+\vspace{-2cm}
+{
+  \hypersetup{linkcolor=black}
+  \tableofcontents
+}
+%\tableofcontents
+\addtocontents{toc}{\protect\enlargethispage{\baselineskip}}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+In order to persist under the pressure of natural selection, organisms need to adapt to the multiple aspects of their surrounding environment. As a result, various forms of social organizations developed across animal species. Living in groups can be beneficial since it allows animals to cooperate in tasks of their everyday lives. However, intraspecific competitions for limited resources and associated costs are increased in groups. Accordingly, animals developed numerous strategies and social behaviors in order to economize competitions. For weakly electric fish, knowledge about such natural, social behaviors is scarce since conclusive behavioral observations are limited by their nocturnal and secretive lifestyle. Yet their unique electric signals, produced by discharges of an electric organ (EOD), provide an excellent opportunity to monitor individual behaviors in freely moving and interacting populations. The EODs of whole groups can be recorded with recording electrode arrays submerged in the water and then be tracked for individual fish by means of various signal features.
+
+In \chapref{Methods}, we present a semi-automatic system capable of tracking electric signals of wave-type electric fish with unprecedented accuracy. Our algorithm benefits from combining and refining previous approaches of tracking individual specific EOD frequencies (EODf) and spatial electric field properties. In this process, the similarity of signal pairs in discrete data windows determines their tracking order. With our advancements, we are capable of resolving most algorithmic issues that occur while tracking individual electric signals in freely behaving groups of wave-type electric fish.
+
+On the basis of tracked EOD traces, we characterized individual spatial-temporal behaviors within a group of 14 brown ghost knifefish, \Lepto{}, over 10 consecutive days (\chapref{Habitats}). In this experiment, fish have been housed in a large communal tank stocked with several naturalistic habitats. The evaluated movement patterns suggest fish to mainly distribute independently from each other according to the presence of suitable shelters. Males with higher EODf showed enhanced explorative behavior during the night and increased territoriality during the day. Both could represent manifestations or displays of dominance, supporting the hypothesis of EODf indicating social status in males. In females, higher EODf seems to indicate more active character traits since movement activities during both day and night increased with EODf.
+
+In order to determine how \lepto{} resolves conflicts, we evaluated behaviors and interactions of unfamiliar pairs of \lepto{} during staged competitions (\chapref{Competitions}). Winners were primarily determined by a larger body size. During competitions, losers continuously emitted rises as electrocommunication signals. These signals frequently provoked ritualized fighting and chase behaviors by the other fish. The number of rises emitted by losers and the duration of chase behaviors depended in similar ways on the contestants' physical attributes. Detailed evaluations of these correlations suggest \lepto{} to adjust their competition behavior according to mutual assessment, whereby rises could signal a loser's motivation to continue assessment through ritualized fighting.
+
+Based on our observations, we suggest \lepto{} to actually prefer remaining solitary. Nevertheless, frequent interactions and conflicts with conspecifics are inevitable because of their abundance. In order to resolve these conflicts economically, \lepto{} establishes a dominance hierarchy. The interplay of rises and agonistic attacks in associated competitions could be used to adjust the skewness in access to resources across social ranks. Males seem to be more motivated to compete and attain higher social ranks, whereas females seem to limit their active participation in dominance fights to occasions where resources are rather scarce, like in our competition experiments. 
+
+\makeatletter
+\@openrightfalse
+\makeatother
+\chapter*{Deutschsprachige Zusammenfassung}
+\addcontentsline{toc}{chapter}{Deutschsprachige Zusammenfassung}
+
+%Alle Organismen, die sich im Verlauf der Evolutionsgeschichte über die Jahrmillionen entwickelt haben, haben sich durch Adaptation an die Bedingungen ihrer Lebensräume angepasst.
+
+Im Verlauf der Evolutionsgeschichte haben sich über die Jahrmillionen verschiedenste Organismen entwickelt, die sich alle durch Adaptation an die Bedingungen ihrer Lebensräume angepasst haben. Dieser Prozess brachte neben anderen Entwicklungen diverse Sozialformen hervor. Für viele Tierarten erwies sich vor allem das Zusammenleben in Gruppen als vorteilhaft, da dieses vielfältige Möglichkeiten zur Kooperation bietet. Gleichzeitig bedeutet das Leben in einer Gruppe jedoch auch vermehrte Konkurrenz um limitierte Ressourcen. Um diese Konflikte möglichst ökonomisch zu gestalten, haben sich im Tierreich zahlreiche verschiedene soziale Strategien und Verhaltensweisen entwickelt. Bei schwach elektrischen Fischen sind solche Verhaltensweisen bislang nur wenig untersucht, da die Durchführung natürlicher Verhaltensstudien an diesen Tieren durch ihre nachtaktive und zurückgezogene Lebensweise stark erschwert wird. Allerdings eröffnen die charakteristischen elektrischen Signale dieser Fische eine nicht-invasive Möglichkeit, Verhaltensweisen dieser Tiere in sich frei bewegenden und interagierenden Populationen zu erforschen. Die elektrischen Signale ganzer Gruppen von elektrischen Fischen können mithilfe von Elektroden-Gittern im Wasser aufgezeichnet und anhand verschiedener Signalparameter für individuelle Tiere getrackt werden.
+
+In Kapitel~\ref{Methods} wird ein eigens entwickelter Algorithmus vorgestellt, welcher mit bis dahin unerreichter Genauigkeit ermöglicht, die elektrischen Signale einzelner Fische anhand der individuell spezifischen Entladungsfrequenz ihrer elektrischen Organe (EOD) und der räumlichen Ausdehnung der daraus resultierenden elektrischen Felder zu tracken. Anhand dieser beiden Signalparameter kann die Ähnlichkeit von Signalpaaren quantifiziert werden. Dies ermöglicht, Signalpaare in einer Reihenfolge von absteigender Ähnlichkeit zu verbinden, um dadurch individuelle Signalspuren einzelner Tiere zu erhalten. Um die benötigte Rechenkapazität für ein solches Tracking-Verfahren zu begrenzen, werden zunächst Signalpaare in sich überlappenden 30\,Sekunden ``tracking windows'' gebildet. In einem darauffolgenden Schritt werden die daraus gewonnenen Signalspuren miteinander verbunden. Durch diesen neuen Algorithmus, welcher vorangegangene Ansätze kombiniert und weiterentwickelt, können die meisten auftretenden Tracking-Probleme gelöst werden, die sich bei der Analyse elektrischer Signale von sich frei bewegenden elektrischen Fischen ergeben. 
+
+Anhand getracker EOD Spuren wurden im Labor die Bewegungsmuster von 14 braunen Messerfischen, \Lepto{}, über einen Zeitraum von 10 aufeinanderfolgenden Tagen hinweg rekonstruiert und charakterisiert (Kapitel~\ref{Habitats}). Besagtes Experiment wurde in einem 2\,m$^3$ großen Aquarium durchgeführt, in dem sich die Fische frei zwischen mehreren natürlichen Habitaten bewegen konnten. Die Fische schienen sich unabhängig voneinander entsprechend der Verfügbarkeit geeigneter Unterschlüpfe im Aquarium zu verteilen. Männchen mit höherer EOD Frequenz zeigten erhöhte Bewegungsaktivität bzw. Explorationsverhalten in der Nacht und verhielten sich stationärer während des Tages. Da solche Verhaltensmuster als Charakteristika oder als Demonstrationen von Dominanz interpretiert werden können, unterstützen diese Beobachtungen die Hypothese, dass die EOD Frequenz männlicher \lepto{} auf ihren sozialen Status schließen lässt. Bei Weibchen hingegen scheinen höhere EOD Frequenzen auf generell aktivere Wesenszüge hinzudeuten, da Weib-chen mit höheren EOD Frequenzen sowohl bei Tag als auch bei Nacht erhöhte Bewegungsaktivität zeigten.
+
+In einem weiteren Experiment, in dem \lepto{} paarweise um einen qualitativ hochwertigen Unterschlupf konkurrierten, wurde untersucht, wie \lepto{} Konflikte löst und welche Verhaltensweisen dabei angewendet werden (Kapitel~\ref{Competitions}). In den meisten Versuchsdurchläufen besetzte das größere Tier am Ende des Versuchs den hochwertigen Unterschlupf und wurde so als Gewinner identifiziert. Während der Versuche interagierten die Fische durch ritualisiertes Kampfverhalten und Elektrokommunikation. Die unterlegenen Fische produzierten dabei kontinuierlich sogenannte ``Rises'', obwohl daraufhin der überlegene Fisch häufiger agonistische Interaktionen initiierte. Die Anzahl der detektierten ``Rises'' und die Dauer von agonistischen Interaktionen konnte gleichermaßen mit den physischen Eigenschaften beider Fische in Verbindung gebracht werden. Die detaillierte Analyse dieser Zusammenhänge deutet darauf hin, dass \lepto{} die Kampfkraft eines Gegners anhand von verschiedenen aktiven und passiven Signalen sowie ritualisiertem Kampfverhalten abschätzt, mit der eigenen Kampfkraft vergleicht und sein Verhalten entsprechend des Unterschiedes anpasst. Dabei könnten Rises von unterlegenen Tieren dazu genutzt werden, ihre Motivation zur Fortführung ritualisierter Kämpfe zu signalisieren.
+
+Die in der vorliegenden Dissertation beschriebenen Verhaltensstudien deuten darauf hin, dass \lepto{} eigentlich eine Lebensweise als Einzelgänger gegenüber dem Zusammenleben in Gruppen bevorzugt. Allerdings sind regelmäßige Interaktionen und Rivalitäten mit Artgenossen durch ihre weite und dichte Verbreitung unumgänglich. Um die aus repetitiven Kämpfen entstehenden hohen Kosten zu verringern, etabliert \lepto{} eine soziale Hierarchie. In den zum Zwecke dieser Hierarchiebildung stattfindenden ritualisierten Kämpfen könnte das Zusammenspiel von ``Rises'' und agonistischen Interaktionen den Dominanzunterschied und damit die Verteilung von Ressourcen zwischen den Tieren definieren. Weiterhin lassen Verhaltensunterschiede zwischen Männchen und Weibchen annehmen, dass der Ausgang von Rivalitätskämpfen und der individuelle soziale Status für Männchen wichtiger sind als für Weibchen. Letztere scheinen ihre aktive Teilnahme an Dominanzkämpfen auf Situationen zu beschränken, in welchen Ressourcen stark limitiert sind.
+
+
+\thispagestyle{plain}
+
+%\chapter*{Deutschsprachige Zusammenfassung}
+%\addcontentsline{toc}{chapter}{Deutschsprachige Zusammenfassung}
+%
+%Alle Organismen, die sich im Verlauf der Evolutionsgeschichte über die Jahrmillionen entwickelten, haben sich durch Adaptation an die Bedingungen ihrer Lebensräume angepasst. Dieser Prozess brachte neben anderen Entwicklungen die verschiedensten Sozialformen hervor. Für viele Tierarten erwies sich das Zusammenleben in Gruppen als vorteilhaft. Ein zentraler Faktor sind dabei die vielfältigen Möglichkeiten zur kooperation bezüflich der Anforderungen des täglichen Überlebens.
+%
+%In Gruppen profitieren Tiere von den vielfältigen Möglicheiten zur Kooperation. Allerdings bedeutet das Leben in einer Gruppe auch vermehrte Konkurenz um limiterte Resourcen. Um diese Konflike möglichst ökonomisch zu gestalten haben sich im Tierreich verschiedene Verhaltensweisen und Konfliktlösungsstrategien entwickelt. 
+%
+%Solche Verhaltensweisen sind in schwach elektrischen Fischen bislang wenig untersucht, da die Möglichkeiten for natürliche Verhaltensstudien an diesen Tieren durch ihre nachtaktiven und zurückgezogenen Lebensweisen stark limitiert sind. Allerdings eröffnet sich durch die eigens erzeugten elektrischen Signale dieser Fische eine nicht-invasive Möglichkeit Verhaltesweisen einzelner Tiere in sich frei bewegenden und interagierenden Pupulationen zu untersuchen. Die elektrischen Signale von elektrischen Fischen können mithilfe von Elektroden-Gittern im Wasser aufgezeichnet und anhand verschiedener Signalparameter für individuelle Tiere getrackt werden.
+%
+%In Kapitel~\ref{Methods} wird ein Algorithmus vorgestellt, der ermöglicht die elektrischen Signale einzelner Fische anhand der individuell speziefischen Entladungsfrequenz ihrer eketrischen Organe (EOD) und der räumlichen Ausdehnung der daraus resultierenden eketrischen Felder zu tracken. Durch diese Signalparameter kann die Ähnlichkeit von Signalpaaren quantifiziert werden. Dies ermöglicht Signalpaare in einer Reihenfolge von absteigender Ähnlichkeit zu verbinden um dadurch individualle Signalspuren eizelner Tiert zu erhalten. Um die benötigte Rechenkapazität für ein solches Tracking in Grenzen zu halten werden zunächst Signalpaare in sich überlappenden 30\,Sekunden ``tracking windows'' gebildet. In einem darauffolgenden Schritt werden die daraus resultierenden Signalspuren verbunden. In dem vorgestellen Algorithmus wurden Ideen früherer Tracking-Ansätze kombiniert und weiterentwickelt. Dadurch können die meisten schwierigen Tracking Probleme, welche sich bei der Analyse von eletrischen Signalen sich frei bewegender elektrischer Fische ergeben, gelöst werden. 
+%
+%Anhand getracker EOD Spuren konnten im Labor die Bewegungsmuster von 14 braunen Messerfischen, \Lepto{}, rekonstruiert und charakterisiert werden (Kapitel~\ref{Habitats}). Besagtes Experiment wurde in einem großen Aquarium durchgeführt, in dem sich die Fische frei zwischen mehreren natürlichen Habitaten bewegen konnten. Die Fische schienen sich unabhängig voneinander, entsprechend der Verfügbarkeit von geeigneten Unterschlüpfen im Aquarium zu verteilen. Männchen mit höherer EOD Frequenz zeigen erhörte Bewegungsaktivität/Explorationsverhalten in der Nacht und waren stationärer währen des Tages. Da solche Verhaltensmuster als Charakteristika oder zur Zurschaustellungen von Dominanz interpretiert werden können unterstützen diese Beobachtungen die Hypothese, dass in männlichen \lepto{} die EOD Frequenz auf den sozialen Status eines Tieres hinweist. Bei Weibchen scheinen höhere EOD Frequenzen auf generell aktivere Persönlichkeiten hinzudeuten, da Weibchen mit höheren EOD Frequenzen sowohl bei Tag als auch bei Nacht erhöhte Bewegungsaktivität zeigten.
+%
+%In einem weiteren Experiment, in dem \lepto{} paarweise um einen qualitativ hochwertigen Unterschlupf konkurrierten, sollte untersucht werden, wie \lepto{} Konflikte löst und welche Verhaltensweisen dabei vonnöten sind (Kaptile~\ref{Competitions}). In den meisten Versuchsdurchläufen gewann das größere Tier einer Paarung und besetzte am Ende des Versuchs den hochwertigen Unterschlupf. Die Interaktionen der Tiere beinhalteten Elektrokommunikation und ritualisierte Kämpfe. Die Fische, die später als unterlegen identifiziert wurden produzierten während des Versuchs kontinuiertlich so genannte ``Rises'', obwohl der entsprechend überlegene Fisch daraufhin öffters agonisitische Interaktionen initiierte. Die Anzahl der detektierten ``Rises'' und die Dauer von agonistischen Interaktionen konnte mit den physischen Eigenschaften beider Fische in Verbindung gebracht werden. Die detailierten Analyse dieser Zusammenhänge deutet darauf hin, dass \lepto{} die Kampfkraft eines Gegners anhand von verschiedenen aktiven und passiven Signalen sowie ritualisiertem Kampfverhalten abschätzt, mit der eigenen Krampfkraft vergleicht und sein Verhalten entsprechend des Unterschiedes anpasst. Unterlegene Tiere könnten mit Rises ihre Motivation signalisieren ritualisierte Kämpfe fortzuführen, um eine genauere Einschätzung des Kampfkraft Unterschieds zu ihrem Gegner zu bekommen und potentielle sekundäre Nutzen daraus zu ziehen.
+%
+%Die Verhaltensweisen die im Zuge dieser Dissertation beobachtet und analysiert wurden suggerieren, dass \lepto{} eher ein Einzelgänge ist. Allerdings sind regelmäßige Interaktionen und Rivalitäten mit Artgenossen durch ihre weite und dichte Verbreitung unumgänglich.  Um die hohen Kosten repetitiver Kämpfe zu vermeiden etabliert \lepto{} eine soziale Hierarchie. In zu diesem Zwecke stattfindenden ritualisierten Kämpfen könnte das Zusammenspiel von ``Rises'' und agonistischen Interaktionen die Verteilung von Resourcen zwischen den Tieren definieren. Verhatensunterschieden zwischen Männchen und Weibchen suggerieren, dass der Ausgang von Rivalitätskämpfen und der individuelle sozialer Status für Männchen wichtiger ist als für Weibchen. Letztere könnten ihre aktive Teilnahme an Dominanzkämpfen auf Situationen beschränken, in denen Resources stark limitiert sind.
+%\thispagestyle{plain}
+
+%
+\cleardoublepage
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{\textbf{Acknowledgements}}
+
+First of all, I would like to thank my supervisor, Jan Benda, for his great support, advice, and companionship throughout all stages of my thesis. Especially the vast amount of freedom he gave to me enabled me to shape the path of my scientific work according to my own interests with only little limitations. I am very grateful for his trust and encouragement and everything we have been able to experience together throughout the last years. I very much enjoyed our inspiring (and sometimes heated) disputes and the many opportunities in which I could learn from and together with him. Many thanks also go to the people I had the pleasure to work with, including my colleagues in the lab, my collaborators, everyone who ensured the success of our fieldtrips to South America, and many more. I received great support and advice from everyone I worked with, and the familiar working atmosphere we all together created was invaluable for the success of my thesis.
+\\\\I also want to thank my family and friends who always encouraged and supported me. Especially during the sometimes challenging moments of my thesis they provided compensation and gave me strength. But most of all, I want to thank my wife Lara. She not only supported and encouraged me continuously throughout all these years, but also challenged and inspired me in amazing scientific disputes. She gave invaluable input, questioned my theories and approaches, and helped me to specify and structure my thoughts, which repeatedly led to adjustments and improvements of my scientific work.
+\\\\ Finally, I want to thank the Center of Integrative Neuroscience that supported the first three and a half years of my studies with a fellowship.
+
+
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\graphicspath{{chapter_1_intro/figures/}}
+\include{chapter_1_intro/chapter_intro}
+
+\cleardoublepage
+\graphicspath{{chapter_2_methods/figures/}}
+\include{chapter_2_methods/chapter_methods}
+
+\cleardoublepage
+\graphicspath{{chapter_3_habitats/figures/}}
+\include{chapter_3_habitats/chapter_habitats}
+
+\cleardoublepage
+\graphicspath{{chapter_4_competition/figures/}}
+\include{chapter_4_competition/chapter_competition}
+
+\cleardoublepage
+\graphicspath{{chapter_5_discussion/}}
+\include{chapter_5_discussion/chapter_discussion}
+%
+
+% FOR CROSS-REF ACROSS CHAPTERS
+%https://tex.stackexchange.com/questions/14364/cross-referencing-between-different-files
+%
+%\bibliographystyle{jneurosci}
+%\bibliography{journalsabbrv,references}
+\cleardoublepage
+\fancyhead[LE]{}
+\fancyhead[RO]{Bibliography}
+\thispagestyle{plain}
+\bibliography{journalsabbrv,references}
+\figurecaptions
+
+
+\end{document}

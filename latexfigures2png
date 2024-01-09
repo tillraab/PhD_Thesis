@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [ $# = "0" ] || [ "$1" = "--help" ]; then
+  echo "latexfigures2png by Jan Benda, 2018"
+  echo
+  echo "usage:"
+  echo '    latexfigures2png [-r xxx] texfile'
+  echo
+  echo "convert each figure in texfile to a png pixel graphic"
+  echo "-r xxx: set resolution to xxx (default 300)"
+  exit 0
+fi
+
+RESOLUTION=300
+if [ "$1" = "-r" ]; then
+  shift
+  RESOLUTION=$1
+  shift
+fi
+EXT=jpg
+case $EXT in
+png) CMD=-png ;;
+jpg) CMD=-jpeg ;;
+esac
+
+TEXTEMPFILE="textmp"
+
+sed -n -e '/documentclass/,/begin{document}/{/documentclass/s/\]{.*}/,multi=figure,varwidth]{standalone}/;/usepackage.*{geometry}/d;/breakfloat/d;/^\\pagestyle/s/{.*}/{empty}/;p}; /begin{figure/,/caption/{/begin{figure/s/figure.*/figure}/;/caption/d;p}; /end{figure/{s/figure.*/figure}/;p}; /end{document}/p' "$1" > $TEXTEMPFILE.tex
+
+pdflatex $TEXTEMPFILE
+
+#convert -density $RESOLUTION -background white -alpha remove -alpha off -quality '100%' ${TEXTEMPFILE}.pdf fig-%02d.${EXT}
+
+pdftoppm -r 300 $CMD ${TEXTEMPFILE}.pdf fig
+
+for ff in fig-*.${EXT}; do
+    n=${ff#*-}
+    n=${n%.*}
+    #let n+=1
+    nf=$(printf "figure-%02d.${EXT}" $n)
+    mv $ff $nf
+    echo "wrote $nf"
+done
